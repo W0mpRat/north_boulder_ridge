@@ -1,5 +1,5 @@
-const schedule = require('node-schedule');
-const axios = require('axios');
+const schedule = require('node-schedule')
+const axios = require('axios')
 const windyStationId = 0
 const apiKey = process.env.WINDY_API_KEY
 
@@ -7,7 +7,7 @@ const j = schedule.scheduleJob('10 */5 * * * *', async function () {
   console.log(new Date())
   const observations = await getWeatherData()
   await sendWeatherData(observations)
-});
+})
 
 async function getWeatherData () {
   try {
@@ -25,10 +25,10 @@ async function sendWeatherData (observations) {
     const metricObservation = observations[1]
     const params = {
       observations: [{
-        station: 0,
+        station: windyStationId,
         dateutc: imperialObservation.obsTimeUtc.replace('Z', ''),
         tempf: imperialObservation.imperial.temp,
-        windspeedmph : imperialObservation.imperial.windSpeed,
+        windspeedmph: imperialObservation.imperial.windSpeed,
         winddir: imperialObservation.winddir,
         windgustmph: imperialObservation.imperial.windGust,
         baromin: imperialObservation.imperial.pressure,
