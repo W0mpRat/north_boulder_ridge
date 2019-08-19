@@ -54,8 +54,8 @@ async function sendWeatherData (station, observations) {
     }
     const result = await axios.post(`https://stations.windy.com/pws/update/${apiKey}`, params)
     console.log(`${station.wundergroundName} Observation Posted at: ${new Date().toString()}`)
-    console.log(observations)
-    console.log(params.observations[0])
+    // console.log(observations)
+    // console.log(params.observations[0])
 
     return result
   } catch (error) {
