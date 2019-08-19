@@ -1,7 +1,7 @@
 const schedule = require('node-schedule')
 const axios = require('axios')
 const apiKey = process.env.WINDY_API_KEY
-const wunderGroundApiKey = '6532d6454b8aa370768e63d6ba5a832e'
+const wunderGroundApiKey = process.env.WUNDERGROUND_API_KEY
 const stations = [
   {
     windyId: 0,
@@ -15,18 +15,14 @@ const stations = [
 
 const j = schedule.scheduleJob('10 */5 * * * *', async function () {
   console.log(new Date())
-  // for (const station of stations) {
   const observations = await getWeatherData(stations[0].wundergroundName)
   await sendWeatherData(stations[0], observations)
-  // }
 })
 
 const j2 = schedule.scheduleJob('15 */5 * * * *', async function () {
   console.log(new Date())
-  // for (const station of stations) {
   const observations = await getWeatherData(stations[1].wundergroundName)
   await sendWeatherData(stations[1], observations)
-  // }
 })
 
 async function getWeatherData (wundergroundName) {
