@@ -19,11 +19,11 @@ const j = schedule.scheduleJob('10 */5 * * * *', async function () {
   await sendWeatherData(stations[0], observations)
 })
 
-const j2 = schedule.scheduleJob('15 */5 * * * *', async function () {
-  console.log(`Job Fired at: ${new Date().toString()}`)
-  const observations = await getWeatherData(stations[1].wundergroundName)
-  await sendWeatherData(stations[1], observations)
-})
+// const j2 = schedule.scheduleJob('15 */5 * * * *', async function () {
+//   console.log(`Job Fired at: ${new Date().toString()}`)
+//   const observations = await getWeatherData(stations[1].wundergroundName)
+//   await sendWeatherData(stations[1], observations)
+// })
 
 async function getWeatherData (wundergroundName) {
   try {
@@ -55,8 +55,6 @@ async function sendWeatherData (station, observations) {
     const result = await axios.post(`https://stations.windy.com/pws/update/${apiKey}`, params)
     console.log(`${station.wundergroundName} Observation Posted at: ${new Date().toString()}`)
     console.log(`${station.wundergroundName} ${imperialObservation.imperial.windSpeed}mph, g:${imperialObservation.imperial.windGust}, ${imperialObservation.imperial.temp}F, ${imperialObservation.winddir}`)
-    // console.log(observations)
-    // console.log(params.observations[0])
 
     return result
   } catch (error) {
