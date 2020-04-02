@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
+    name: {
+      singular: 'reading',
+      plural: 'readings'
+    },
     underscored: true,
     tableName: 'readings',
     updatedAt: false
