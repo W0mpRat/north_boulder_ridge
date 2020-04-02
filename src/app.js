@@ -1,7 +1,19 @@
-const { Station } = require('../models')
-const { Reading } = require('../models')
+const { Station } = require('../db/models')
+const { Reading } = require('../db/models')
+const schedule = require('node-schedule')
 const axios = require('axios')
 const wunderGroundApiKey = process.env.WUNDERGROUND_API_KEY
+
+schedule.scheduleJob('30 */1 * * * *', async function () {
+  console.log(`Job Fired at: ${new Date().toString()}`)
+  main().catch((error) => {
+    console.error(error)
+    // Try again in 15 seconds
+    // setTimeout(main(true).catch((error) => {
+    //   console.error(error)
+    // }), 15000)
+  })
+})
 
 async function main () {
   const results = await Station.findAll()
@@ -25,10 +37,4 @@ async function main () {
 
     console.log(result.toJSON())
   }
-
-  process.exit()
 }
-
-main().catch((error) => {
-  throw error
-})
