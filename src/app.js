@@ -1,6 +1,7 @@
 const { Station, Reading } = require('../db/models')
 const express = require('express')
 const cors = require('cors')
+const { Op } = require('sequelize')
 const app = express()
 const port = 3000
 
@@ -12,7 +13,12 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 app.get('/stations', async function (req, res) {
   const stations = await Station.findAll({
     include: [{
-      model: Reading
+      model: Reading,
+      where: {
+        observationTimeUTC: {
+          [Op.gte]: new Date(new Date() - 8 * 60 * 60 * 1000)
+        }
+      }
     }]
   })
 
